@@ -29,7 +29,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
       WorldTime instance = new WorldTime(
           location: getLocation, url: getLocation);
       await instance.getTime();
-      Navigator.pushReplacementNamed(context, '/home', arguments: {
+      Navigator.pop(context, {
         'location': instance.location,
         'time': instance.time,
         'isDaytime': instance.isDaytime

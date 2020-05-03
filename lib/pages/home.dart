@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments;
+    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       backgroundColor: data['isDaytime'] ? Colors.white : Colors.black,
@@ -46,9 +46,16 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 20),
             FlatButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/choose_location');
-                },
+                onPressed: () async {
+                  dynamic result = await Navigator.pushNamed(context, '/choose_location');
+                setState(() {
+                  data = {
+                    'location': result['location'],
+                    'time': result['time'],
+                    'isDaytime': result['isDaytime']
+                  };
+                });
+                  },
                 label: Text(
                   'Change Location',
                   style: TextStyle(color: Colors.white),
